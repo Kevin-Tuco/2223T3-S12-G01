@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Main Page</title>
+	<link rel="stylesheet" type="text/css" href="../../../CSS/index.css">
+	<style>
+		body{
+			background-color: #FFD400;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("form").submit(function(event) {
+				event.preventDefault(); // Prevent the default form submission 
+	
+				// Get the form values
+				var restoRate = $("#user_ln").val();
+				var restoComment = $("#restoComment").val();
+	
+				// Create a new div element to display the form data
+				var review = $("<div>").addClass("review");
+	
+				// Create a new <p> element for the rating
+				var ratingElement = $("<p>").text("Rating: " + restoRate);
+	
+				// Create a new <p> element for the comment
+				var commentElement = $("<p>").text(restoComment);
+	
+				// Create a new <p> element for the current date
+				var currentDate = new Date();
+				var formattedDate = currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+	
+				// Create an edit button for the review div
+				var editButton = $("<button>").text("Edit");
+				editButton.click(function() {
+					if (!$(this).hasClass("editing")) {
+						// Enable editing of rating and comment
+						var ratingInput = $("<input>").attr({
+							type: "number",
+							min: 0,
+							max: 5,
+							step: 0.5,
+							value: restoRate,
+							style: "width: 10%;"
+						});
+						ratingElement.empty().append("Rating: ").append(ratingInput);
+	
+						var commentInput = $("<textarea>").attr({
+							rows: "10",
+							cols: "40",
+							style: "width: 95%;"
+						}).text(restoComment);
+						commentElement.empty().append(commentInput);
+	
+						// Create a change button
+						var changeButton = $("<button>").text("Change");
+						changeButton.click(function() {
+							// Update the rating and comment with the new values
+							restoRate = ratingInput.val();
+							restoComment = commentInput.val();
+	
+							ratingElement.empty().text("Rating: " + restoRate);
+							commentElement.empty().text(restoComment);
+
+							cancelButton.remove();
+							changeButton.remove();
+	
+							// Re-enable the edit button for further editing
+							editButton.prop("disabled", false);
+
+						});
+	
+						// Create a cancel button
+						var cancelButton = $("<button>").text("Cancel");
+						cancelButton.click(function() {
+							// Reset the rating and comment to their original values
+							ratingElement.empty().text("Rating: " + restoRate);
+							commentElement.empty().text("" + restoComment);
+
+							cancelButton.remove();
+							changeButton.remove();
+	
+							// Re-enable the edit button for further editing
+							editButton.prop("disabled", false);
+						});
+	
+						// Replace the edit button with the change and cancel buttons
+						review.append(
+							$("<div>").addClass("likeDislike").append(
+								changeButton,
+								cancelButton
+							)
+						);
+	
+						// Disable the edit button while editing is in progress
+						editButton.prop("disabled", true);
+					}
+				});
+
+				// Create a delete button
+				var deleteButton = $("<button>").text("Delete");
+				deleteButton.click(function() {
+					review.remove();
+				});
+	
+				// Append the <p> elements to the review div
+				review.append(
+					$("<div>").addClass("username").html('<a href="">USERNAME</a>'),
+					$("<div>").addClass("date").text(formattedDate),
+					$("<div>").addClass("restoName").html('<a href="../HTML/restaurants/restau1.html">The Tech Bistro</a>'),
+					$("<div>").addClass("rating").append(ratingElement),
+					$("<hr>"),
+					$("<div>").addClass("comment").append(commentElement),
+					$("<div>").addClass("likeDislike").append(
+						$("<button>").text("Like"),
+						$("<button>").text("Dislike")
+					),
+					$("<div>").addClass("likeDislike").append(
+						editButton,
+						deleteButton,
+					)
+				);	
+
+				// Append the review div to the reviewList div
+				$(".reviewList").prepend(review);
+	
+				// Clear the form fields
+				$("#restoName").val("");
+				$("#user_ln").val("");
+				$("#restoComment").val("");
+			});
+		});
+	</script>
+</head>
+<body>
+	<a href = "../index-user.html" style = "text-decoration: none;">
+		<div class="navLogo">
+			<img class="logo" src="../../../CSS/logo.png" alt="">
+			<div class = "logo_name">
+				<h1 style = "color: black;">RATE-EAT-UP</h1>
+			</div>
+		</div>
+	</a>
+	
+	<div class="navMain">
+		<div class = "nav">
+			<a href="../index-user.html">Home</a>
+		</div>
+		<div class = "nav">
+			<a href="../userRestoList.html">Restaurants</a>
+		</div>	
+		<div class = "nav">
+			<a href="../user.html">Profile</a>
+		</div>	
+		<div class = "nav">
+			<a href="../../login.html">LogOut</a>
+		</div>
+	</div>
+
+    <div class="profileSummary">
+        <div class = "profPic">
+            <img src="../../../CSS/dp.png" class = "picture" alt="">
+            <div style="font-size: 40px; font-family: Carter One">The Giving Table</div>
+        </div>
+		<div class = "random-fact">
+			<div class = "quote-stuff">
+				<div class = "quote">Address: 456 Generosity Street, Heartville, Philanthropia</div>
+				<div class = "quote_desc" style = "font-size: 20px; font-family: Carter One;">Hello, we are open Monday - Sunday (10:00AM - 11:00PM), Let's go mukbang ;) </div>
+			</div>
+			<div style="font-size: 50px; width: 100%; font-family: Carter One; font-size: 40px;">About</h1>
+				<div style="font-size: 20px; font-family: Carter One;">Experience the power of food for a greater cause at The Giving Table. This philanthropic restaurant embraces the spirit of giving, with every dish contributing to meaningful charitable initiatives. Delight in thoughtfully crafted meals made from locally sourced ingredients, all while making a positive impact on the community.</div>
+			</div>
+		</div>
+    </div>
+
+    <!-- <section class="profileAbout" style="
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: stretch;
+    ">
+        <h1>About</h1>
+        <div></div>
+    </section> -->
+
+	<div class="newreview">		
+		<h1 style = "font-family: Carter One; margin-left: 10px;">New Review</h1>
+		<div class="review">
+			<form style="display: flex; flex-direction: column; align-items: left; padding-left: 5%; padding-top: 1%;">
+				<input type="number" id="user_ln" placeholder="Rating " min="0" max="5" step="0.5" required style="width: 10%;">
+				<textarea id="restoComment" placeholder="Comment" rows="4" cols="50" required style="width: 90%;"></textarea><br>
+				<button type="submit">Submit</button><br>	
+			</form>
+		</div>
+		<h1 style = "font-family: Carter One; margin-left: 10px;">Recent Reviews</h1>
+		<div class="reviewList">				
+			<div class="review">
+				<div class="username"><a href="../userProfiles/profile2.html">Juliet Greene</a></div>
+				<div class="date">June 21, 2023</div>
+				<div class="restoName"><a href="../userRestaurants/restau2.html">The Giving Table</a></div>
+				<hr>
+				<div class="revMain">The Giving Table, while having a noble cause, didn't impress me. The food lacked depth and creativity, resulting in a forgettable meal. I appreciate the philanthropic aspect, but the flavors fell flat, leaving me wanting more from the dining experience.</div>
+				<div class="likeDislike">
+					<button>Like</button>
+					<button>Dislike</button>
+				</div>
+			</div>
+			<div class="review">
+				<div class="username"><a href="../userProfiles/profile1.html">Alpha Lawson</a></div>
+				<div class="date">June 20, 2023</div>
+				<div class="restoName"><a href="../userRestaurants/restau2.html">The Giving Table</a></div>
+				<hr>
+				<div class="revMain">It is a remarkable restaurant that combines exceptional flavors with a philanthropic mission. Each dish is prepared with love and supports a greater cause. A heartwarming culinary experience that leaves you satisfied in more ways than one.</div>
+				<div class="likeDislike">
+					<button>Like</button>
+					<button>Dislike</button>
+				</div>
+			</div>
+			<div class="review">
+				<div class="username"><a href="../userProfiles/profile3.html">Romeo Thompson</a></div>
+				<div class="date">June 16, 2023</div>
+				<div class="restoName"><a href="../userRestaurants/restau2.html">The Giving Table</a></div>
+				<hr>
+				<div class="revMain">The Giving Table fell short of expectations. While the philanthropic aspect is commendable, the execution in terms of flavors and culinary expertise was lacking. The dishes lacked creativity and failed to excite my taste buds. It's disappointing when a well-intentioned concept doesn't translate into an exceptional dining experience.</div>
+				<div class="likeDislike">
+					<button>Like</button>
+					<button>Dislike</button>
+				</div>
+			</div>
+			<div class="review">
+				<div class="username"><a href="../userProfiles/profile4.html">Victoria Morgan</a></div>
+				<div class="date">May 23, 2023</div>
+				<div class="restoName"><a href="../userRestaurants/restau2.html">The Giving Table</a></div>
+				<hr>
+				<div class="revMain">The Giving Table has a commendable philanthropic mission, but unfortunately, the food didn't impress. The flavors were mediocre, and the execution felt uninspired. While the intention is noble, the culinary aspect could use significant improvement to match the charitable cause.</div>
+				<div class="likeDislike">
+					<button>Like</button>
+					<button>Dislike</button>
+				</div>
+			</div>
+			<div class="review">
+				<div class="username"><a href="../userProfiles/profile5.html">Gabriel Ramirez</a></div>
+				<div class="date">May 02, 2023</div>
+				<div class="restoName"><a href="../userRestaurants/restau2.html">The Giving Table</a></div>
+				<hr>
+				<div class="revMain">The Giving Table, while having a noble mission, didn't leave a lasting impression. The dishes lacked innovation and were forgettable. The flavors were ordinary and failed to excite my palate. It's disappointing when a concept with good intentions doesn't translate into an exceptional culinary experience.</div>
+				<div class="likeDislike">
+					<button>Like</button>
+					<button>Dislike</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

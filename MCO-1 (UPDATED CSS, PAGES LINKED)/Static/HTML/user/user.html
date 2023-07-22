@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Main Page</title>
+	<link rel="stylesheet" type="text/css" href="../../CSS/index.css">
+	<style>
+		body{
+			background-color: #FFD400;
+		}
+	</style>
+	<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=qwhq4_uaxvQx6I3Mve8JzCrTVxV-paaLPT09QYQ7rKtLObJllVft7HFDwjs5Pysc3jwItgIGASP9RUmJVl0NQnC_AoKm0GR5EnVeYsjJycifMJu4_wbMAiMa-qPKe8ZVXNIWSFlTadcqKGqH9sRbW5j3MIM3HIr3ueLjWgNSZUWId86sRhFzxZPfloSjxHVldWUyTZIbG5sTM_HCzBzIcKQdKBwM6P1iK14_XdTb-NHJ3FNYAlcCzrCoVQ9rJN_RiR4p1PbgFYqpAfLuCAfw9xRSaE7vv-AayxD1E6uY97vS9qj0ckFzT4pDh528j8uH-AAeRggDmlDS43bgVgLcfAWNpsfmMsPqqetXQdOM3y8" charset="UTF-8"></script><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			var editProfileButton = $(".editProfileButton"); // Store a reference to the "Edit Profile" button
+			var editProfileButtonDIV = $(".editProfileButtonDIV"); // Store a reference to the button's container div
+	
+			$(".editProfileButtonDIV").on("click", ".editProfileButton", function() {
+				var clickedButton = $(this); // Store a reference to the clicked "Edit Profile" button
+	
+				// Remove the "Edit Profile" button
+				clickedButton.remove();
+				var name = $(".profPic > div:nth-child(2)");
+				var username = $(".profPic > div:nth-child(3)");
+				var quote = $(".quote");
+				var quoteDesc = $(".quote_desc");
+				var description = $(".profileSummary > .random-fact > div:nth-child(7)");
+				var about = $(".random-fact > div:nth-child(3)");
+	
+				// Store the original values for canceling
+				var originalValues = {
+					name: name.text(),
+					username: username.text(),
+					quote: quote.text(),
+					quoteDesc: quoteDesc.text(),
+					description: description.text(),
+					about: about.text()
+				};
+	
+				// Enable editing of Name
+				var nameInput = $("<input>").attr("type", "text").val(originalValues.name).css("width", "90%").css("height", "25px");
+				name.empty().append(nameInput);
+	
+				// Enable editing of username
+				var usernameInput = $("<input>").attr("type", "text").val(originalValues.username).css("width", "90%").css("height", "25px");
+				username.empty().append(usernameInput);
+	
+				// Enable editing of quote
+				var quoteInput = $("<textarea>").text(originalValues.quote).css("width", "100%").css("height", "100px");
+				quote.empty().append(quoteInput);
+	
+				// Enable editing of quote description
+				var quoteDescInput = $("<textarea>").text(originalValues.quoteDesc).css("width", "100%").css("height", "100px");
+				quoteDesc.empty().append(quoteDescInput);
+	
+				// Enable editing of description section
+				var descriptionInput = $("<textarea>").text(originalValues.description).css("width", "100%").css("height", "100px");
+				description.empty().append(descriptionInput);
+	
+				// Enable editing of about section
+				var aboutInput = $("<textarea>").text(originalValues.about).css("width", "100%").css("height", "100px");
+				about.empty().append(aboutInput);
+	
+				// Create a save button
+				var saveButton = $("<button>").addClass("likeDislike").text("Save");
+				saveButton.click(function() {
+					// Update the details with the new values
+					var newname = nameInput.val();
+					var newUsername = usernameInput.val();
+					var newQuote = quoteInput.val();
+					var newQuoteDesc = quoteDescInput.val();
+					var newDescription = descriptionInput.val();
+					var newAbout = aboutInput.val();
+	
+					name.empty().text(newname);
+					username.empty().text(newUsername);
+					quote.empty().text(newQuote);
+					quoteDesc.empty().text(newQuoteDesc);
+					description.empty().text(newDescription);
+					about.empty().text(newAbout);
+	
+					// Remove the save button and cancel button
+					saveButton.remove();
+					cancelButton.remove();
+	
+					// Append the "Edit Profile" button back to its original position
+					editProfileButtonDIV.append(editProfileButton);
+				});
+	
+				// Create a cancel button
+				var cancelButton = $("<button>").addClass("likeDislike").text("Cancel");
+				cancelButton.click(function() {
+					// Reset the details to their original values
+					name.empty().text(originalValues.name);
+					username.empty().text(originalValues.username);
+					quote.empty().text(originalValues.quote);
+					quoteDesc.empty().text(originalValues.quoteDesc);
+					description.empty().text(originalValues.description);
+					about.empty().text(originalValues.about);
+	
+					// Remove the save button and cancel button
+					saveButton.remove();
+					cancelButton.remove();
+	
+					// Append the "Edit Profile" button back to its original position
+					editProfileButtonDIV.append(editProfileButton);
+				});
+	
+				// Add the buttons to the container
+				editProfileButtonDIV.append(saveButton, cancelButton);
+			});
+		});
+	</script>
+	
+</head>
+<body>
+	<a href = "index-user.html" style = "text-decoration: none;">
+		<div class="navLogo">
+			<img class="logo" src="../../CSS/logo.png" alt="">
+			<div class = "logo_name">
+				<h1 style = "color: black;">RATE-EAT-UP</h1>
+			</div>
+		</div>
+	</a>
+	
+	<div class="navMain">
+		<div class = "nav">
+			<a href="index-user.html">Home</a>
+		</div>
+		<div class = "nav">
+			<a href="userRestoList.html">Restaurants</a>
+		</div>				
+		<div class = "nav">
+			<a href="user.html">Profile</a>
+		</div>	
+		<div class = "nav">
+			<a href="../login.html">LogOut</a>
+		</div>
+	</div>
+
+    <div class="profileSummary">
+        <div class = "profPic">
+            <img src="../../CSS/dp.png" class = "picture" alt="">
+            <div style="font-size: 40px; font-family: Carter One">SilverSpark Brown</div>
+			<div style="font-size: 20px; font-family: Carter One; align-content: center;">silverspark_brown</div>
+        </div>
+		<div class = "random-fact">
+			<div class = "quote-stuff">
+				<div class = "quote">Life is like riding a bicycle. To keep your balance, you must keep moving.</div>
+				<div class = "quote_desc" style = "font-size: 20px; font-family: Carter One;">Hello, my name is SilverSpark. Let's go mukbang ;)</div>
+			</div>
+			<div style="font-size: 50px; width: 100%; font-family: Carter One; font-size: 40px;">About</h1></div>
+			<div style="font-size: 20px; font-family: Carter One;">I am a creative and compasionate soul. I always seek out ways to make a positive impact in the world and help others. In my free time, I enjoy painting, playing music and volunteering. I am a natural leader and has a strong sense of purpose in life. Also determined to make a difference in the world and leave her mark, one step at a time."</div>
+			</div>						
+		</div>		
+    </div>
+	<div class="editProfileButtonDIV" style="text-align: center;"> 
+		<button class="editProfileButton">Edit Profile</button>
+	</div>
+
+	<h1 style = "font-family: Carter One; margin-left: 10px;">Recent Reviews</h1>
+	<div class="reviewList">
+		
+	</div>
+</body>
+</html>

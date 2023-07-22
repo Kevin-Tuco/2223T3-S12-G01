@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Main Page</title>
+	<link rel="stylesheet" type="text/css" href="../../../CSS/index.css">
+	<style>
+		body{
+			background-color: #FFD400;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("form").submit(function(event) {
+				event.preventDefault(); // Prevent the default form submission 
+	
+				// Get the form values
+				var restoRate = $("#user_ln").val();
+				var restoComment = $("#restoComment").val();
+	
+				// Create a new div element to display the form data
+				var review = $("<div>").addClass("review");
+	
+				// Create a new <p> element for the rating
+				var ratingElement = $("<p>").text("Rating: " + restoRate);
+	
+				// Create a new <p> element for the comment
+				var commentElement = $("<p>").text(restoComment);
+	
+				// Create a new <p> element for the current date
+				var currentDate = new Date();
+				var formattedDate = currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+	
+				// Create an edit button for the review div
+				var editButton = $("<button>").text("Edit");
+				editButton.click(function() {
+					if (!$(this).hasClass("editing")) {
+						// Enable editing of rating and comment
+						var ratingInput = $("<input>").attr({
+							type: "number",
+							min: 0,
+							max: 5,
+							step: 0.5,
+							value: restoRate,
+							style: "width: 10%;"
+						});
+						ratingElement.empty().append("Rating: ").append(ratingInput);
+	
+						var commentInput = $("<textarea>").attr({
+							rows: "10",
+							cols: "40",
+							style: "width: 95%;"
+						}).text(restoComment);
+						commentElement.empty().append(commentInput);
+	
+						// Create a change button
+						var changeButton = $("<button>").text("Change");
+						changeButton.click(function() {
+							// Update the rating and comment with the new values
+							restoRate = ratingInput.val();
+							restoComment = commentInput.val();
+	
+							ratingElement.empty().text("Rating: " + restoRate);
+							commentElement.empty().text(restoComment);
+
+							cancelButton.remove();
+							changeButton.remove();
+	
+							// Re-enable the edit button for further editing
+							editButton.prop("disabled", false);
+
+						});
+	
+						// Create a cancel button
+						var cancelButton = $("<button>").text("Cancel");
+						cancelButton.click(function() {
+							// Reset the rating and comment to their original values
+							ratingElement.empty().text("Rating: " + restoRate);
+							commentElement.empty().text("" + restoComment);
+
+							cancelButton.remove();
+							changeButton.remove();
+	
+							// Re-enable the edit button for further editing
+							editButton.prop("disabled", false);
+						});
+	
+						// Replace the edit button with the change and cancel buttons
+						review.append(
+							$("<div>").addClass("likeDislike").append(
+								changeButton,
+								cancelButton
+							)
+						);
+	
+						// Disable the edit button while editing is in progress
+						editButton.prop("disabled", true);
+					}
+				});
+
+				// Create a delete button
+				var deleteButton = $("<button>").text("Delete");
+				deleteButton.click(function() {
+					review.remove();
+				});
+	
+				// Append the <p> elements to the review div
+				review.append(
+					$("<div>").addClass("username").html('<a href="">USERNAME</a>'),
+					$("<div>").addClass("date").text(formattedDate),
+					$("<div>").addClass("restoName").html('<a href="../HTML/restaurants/restau1.html">The Tech Bistro</a>'),
+					$("<div>").addClass("rating").append(ratingElement),
+					$("<hr>"),
+					$("<div>").addClass("comment").append(commentElement),
+					$("<div>").addClass("likeDislike").append(
+						$("<button>").text("Like"),
+						$("<button>").text("Dislike")
+					),
+					$("<div>").addClass("likeDislike").append(
+						editButton,
+						deleteButton,
+					)
+				);	
+
+				// Append the review div to the reviewList div
+				$(".reviewList").prepend(review);
+	
+				// Clear the form fields
+				$("#restoName").val("");
+				$("#user_ln").val("");
+				$("#restoComment").val("");
+			});
+		});
+	</script>
+</head>
+<body>
+	<a href = "../index-user.html" style = "text-decoration: none;">
+		<div class="navLogo">
+			<img class="logo" src="../../../CSS/logo.png" alt="">
+			<div class = "logo_name">
+				<h1 style = "color: black;">RATE-EAT-UP</h1>
+			</div>
+		</div>
+	</a>
+	
+	<div class="navMain">
+		<div class = "nav">
+			<a href="../index-user.html">Home</a>
+		</div>
+		<div class = "nav">
+			<a href="../userRestoList.html">Restaurants</a>
+		</div>	
+		<div class = "nav">
+			<a href="../user.html">Profile</a>
+		</div>	
+		<div class = "nav">
+			<a href="../../login.html">LogOut</a>
+		</div>
+	</div>
+
+    <div class="profileSummary">
+        <div class = "profPic">
+            <img src="../../../CSS/dp.png" class = "picture" alt="">
+            <div style="font-size: 40px; font-family: Carter One">The Charitable Kitchen</div>
+        </div>
+		<div class = "random-fact">
+			<div class = "quote-stuff">
+				<div class = "quote">Address: 987 Kindness Road, Harmonyville, Inclusivity Corner</div>
+				<div class = "quote_desc" style = "font-size: 20px; font-family: Carter One;">Hello, we are open Monday - Sunday (10:00AM - 11:00PM), Let's go mukbang ;) </div>
+			</div>
+			<div style="font-size: 50px; width: 100%; font-family: Carter One; font-size: 40px;">About</h1>
+				<div style="font-size: 20px; font-family: Carter One;">Find warmth and inclusivity at The Charitable Kitchen. This restaurant embraces diversity and kindness, creating a welcoming space for all. Savor a menu that celebrates compassion through delectable and thoughtfully prepared dishes, where every bite carries a message of unity and understanding.</div>
+			</div>
+		</div>
+    </div>
+
+    <!-- <section class="profileAbout" style="
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: stretch;
+    ">
+        <h1>About</h1>
+        <div></div>
+    </section> -->
+
+	<div class="newreview">		
+		<h1 style = "font-family: Carter One; margin-left: 10px;">New Review</h1>
+		<div class="review">
+			<form style="display: flex; flex-direction: column; align-items: left; padding-left: 5%; padding-top: 1%;">
+				<input type="number" id="user_ln" placeholder="Rating " min="0" max="5" step="0.5" required style="width: 10%;">
+				<textarea id="restoComment" placeholder="Comment" rows="4" cols="50" required style="width: 90%;"></textarea><br>
+				<button type="submit">Submit</button><br>	
+			</form>
+		</div>
+		<h1 style = "font-family: Carter One; margin-left: 10px;">Recent Reviews</h1>
+		<div class="reviewList">
+			<div class="review">
+				<div class="username"><a href="../userProfiles/profile2.html">Juliet Greene</a></div>
+				<div class="date">June 21, 2023</div>
+				<div class="restoName"><a href="../userResaurants/restau5.html">The Charitable Kitchen</a></div>
+				<hr>
+				<div class="revMain">The Charitable Kitchen is a beacon of kindness and inclusivity. With a thoughtfully curated menu and a welcoming atmosphere, it creates a space where everyone can feel embraced. A place where delicious food meets compassion.</div>
+				<div class="likeDislike">
+					<button>Like</button>
+					<button>Dislike</button>
+				</div>
+			</div>
+			<div class="review">
+				<div class="username"><a href="../userProfiles/profile4.html">Victoria Morgan</a></div>
+				<div class="date">June 17, 2023</div>
+				<div class="restoName"><a href="../userResaurants/restau5.html">The Charitable Kitchen</a></div>
+				<hr>
+				<div class="revMain">The Charitable Kitchen not only serves incredible food but also spreads a message of kindness and inclusivity. The menu is thoughtfully curated to accommodate various dietary preferences, ensuring that everyone feels welcome and satisfied. The atmosphere exudes warmth and acceptance, creating a safe space for all diners.</div>
+				<div class="likeDislike">
+					<button>Like</button>
+					<button>Dislike</button>
+				</div>
+			</div>
+			<div class="review">
+				<div class="username"><a href="../userProfiles/profile1.html">Alpha Lawson</a></div>
+				<div class="date">June 13, 2023</div>
+				<div class="restoName"><a href="../userResaurants/restau5.html">The Charitable Kitchen</a></div>
+				<hr>
+				<div class="revMain">The Charitable Kitchen embodies kindness and inclusivity. With a thoughtfully curated menu catering to diverse dietary preferences, it creates a welcoming space for all. A place where delicious food meets a mission to spread compassion and make a positive impact.</div>
+				<div class="likeDislike">
+					<button>Like</button>
+					<button>Dislike</button>
+				</div>
+			</div>
+			<div class="review">
+				<div class="username"><a href="../userProfiles/profile3.html">Romeo Thompson</a></div>
+				<div class="date">May 22, 2023</div>
+				<div class="restoName"><a href="../userResaurants/restau5.html">The Charitable Kitchen</a></div>
+				<hr>
+				<div class="revMain"> The Charitable Kitchen, while promoting inclusivity, didn't deliver on flavor. The dishes felt uninspired and lacked the culinary finesse I anticipated. While the intention behind the concept is admirable, the execution left much to be desired in terms of taste and creativity.</div>
+				<div class="likeDislike">
+					<button>Like</button>
+					<button>Dislike</button>
+				</div>
+			</div>
+			<div class="review">
+				<div class="username"><a href="../userProfiles/profile5.html">Gabriel Ramirez</a></div>
+				<div class="date">May 17, 2023</div>
+				<div class="restoName"><a href="../userResaurants/restau5.html">The Charitable Kitchen</a></div>
+				<hr>
+				<div class="revMain">The Charitable Kitchen focuses on inclusivity, but the flavors didn't live up to the concept. The dishes lacked creativity and failed to leave a lasting impression. While the intention is commendable, the execution didn't meet my expectations in terms of taste and innovation.</div>
+				<div class="likeDislike">
+					<button>Like</button>
+					<button>Dislike</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

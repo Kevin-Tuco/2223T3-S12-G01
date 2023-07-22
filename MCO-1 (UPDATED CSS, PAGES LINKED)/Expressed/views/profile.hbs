@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Main Page</title>
+	<link rel="stylesheet" type="text/css" href="../../../CSS/index.css">
+	<style>
+		body{
+			background-color: #FFD400;
+		}
+	</style>
+</head>
+<body>
+	<div class="profileSummary">
+        <div class = "profPic">
+            <img src="" class = "picture" alt="">
+            <div style="font-size: 40px; font-family: Carter One"></div>
+			<div style="font-size: 20px; font-family: Carter One; align-content: center;"></div>
+        </div>
+		<div class = "random-fact">
+			<div class = "quote-stuff">
+				<div class = "quote"></div>
+				<div class = "quote_desc" style = "font-size: 20px; font-family: Carter One;"></div>
+			</div>
+			<div style="font-size: 50px; width: 100%; font-family: Carter One; font-size: 40px;">About</h1></div>
+			<div style="font-size: 20px; font-family: Carter One;"></div>
+		</div>
+    </div>
+
+    <!-- <section class="profileAbout" style="
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: stretch;
+    ">
+        <h1>About</h1>
+        <div></div>
+    </section> -->
+
+	<h1 style = "font-family: Carter One; margin-left: 10px;">Recent Reviews</h1>
+	<div class="reviewList">
+		{{#each reviews}}
+			{{> review this}}
+			{{#each this.replies}}
+				{{> repliy this}}
+			{{/each}}
+		{{/each}}
+	</div>
+</body>
+</html>
